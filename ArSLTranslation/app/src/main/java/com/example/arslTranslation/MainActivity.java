@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // otherwise, we can proceed
                 else {
-                    Intent recordGesture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    Intent recordGesture = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                     startActivityForResult(recordGesture, 0);
                 }
             }
@@ -95,7 +95,11 @@ public class MainActivity extends AppCompatActivity {
             switch (requestCode) {
                 case 0: // camera
                     if (resultCode == RESULT_OK && data != null) {
-                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
+                        // on below line setting video uri for our video view.
+//                        videoView.setVideoURI(data.getData());
+                        // on below line starting a video view
+//                        videoView.start();
+//                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
 //                        imageView.setImageBitmap(selectedImage);
                         // CALL FUNCTION TO CALCULATE ATD
                         Toast.makeText(MainActivity.this, "Video Taken", Toast.LENGTH_LONG).show();

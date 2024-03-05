@@ -126,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     break;
+
+                    // put the gallery as a background
+                    // menu items -- record, upload
             }
         }
     }

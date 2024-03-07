@@ -14,10 +14,13 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.VideoView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnRecord, btnUploadVid;
+    private Intent intent;
+    private VideoView videoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
         btnRecord = (Button) findViewById(R.id.btnRecord);
         btnUploadVid = (Button) findViewById(R.id.btnUploadVid);
+        videoView = (VideoView) findViewById(R.id.videoView);
+        videoView.setOnClickListener(this);
 
         btnRecord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(MainActivity.this,
                             new String[]{android.Manifest.permission.CAMERA}, 123);
 
-                // otherwise, we can proceed
+                    // otherwise, we can proceed
                 else {
                     Intent recordGesture = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                     startActivityForResult(recordGesture, 0);
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     ActivityCompat.requestPermissions(MainActivity.this,
                             new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 456);
 
-                // otherwise, we can proceed
+                    // otherwise, we can proceed
                 else {
                     Intent uploadVid = new Intent(Intent.ACTION_PICK,
                             android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -95,6 +100,13 @@ public class MainActivity extends AppCompatActivity {
             switch (requestCode) {
                 case 0: // camera
                     if (resultCode == RESULT_OK && data != null) {
+                        Uri videoURI = data.getData();
+
+                        videoView.setVideoURI(data.getData());
+                        videoView.start();
+//                        intent = new Intent(this, recordActivity.class);
+//                        intent.putExtra("video", data.getData());
+//                        this.startActivity(intent);
                         // on below line setting video uri for our video view.
 //                        videoView.setVideoURI(data.getData());
                         // on below line starting a video view
@@ -127,9 +139,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
 
-                    // put the gallery as a background
-                    // menu items -- record, upload
+                // put the gallery as a background
+                // menu items -- record, upload
             }
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        videoView.start();
     }
 }

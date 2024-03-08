@@ -11,15 +11,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import org.opencv.android.OpenCVLoader;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btnRecord, btnUploadVid;
-    private Intent intent;
     private VideoView videoView;
 
     @Override
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         videoView = (VideoView) findViewById(R.id.videoView);
         videoView.setOnClickListener(this);
 
+        if (OpenCVLoader.initDebug()) Log.d("OpenCV", "Loaded Successfully");
+        else Log.d("OpenCV", "Error in Loading");
+
         btnRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ActivityCompat.requestPermissions(MainActivity.this,
                             new String[]{android.Manifest.permission.CAMERA}, 123);
 
-                    // otherwise, we can proceed
+                // otherwise, we can proceed
                 else {
                     Intent recordGesture = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                     startActivityForResult(recordGesture, 0);
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ActivityCompat.requestPermissions(MainActivity.this,
                             new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 456);
 
-                    // otherwise, we can proceed
+                // otherwise, we can proceed
                 else {
                     Intent uploadVid = new Intent(Intent.ACTION_PICK,
                             android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -94,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /* modify */
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
@@ -102,18 +105,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (resultCode == RESULT_OK && data != null) {
                         Uri videoURI = data.getData();
 
-                        videoView.setVideoURI(data.getData());
+                        videoView.setVideoURI(data.getData());  // set video URI for the video view
                         videoView.start();
-//                        intent = new Intent(this, recordActivity.class);
-//                        intent.putExtra("video", data.getData());
-//                        this.startActivity(intent);
-                        // on below line setting video uri for our video view.
-//                        videoView.setVideoURI(data.getData());
-                        // on below line starting a video view
-//                        videoView.start();
-//                        Bitmap selectedImage = (Bitmap) data.getExtras().get("data");
-//                        imageView.setImageBitmap(selectedImage);
-                        // CALL FUNCTION TO CALCULATE ATD
+
                         Toast.makeText(MainActivity.this, "Video Taken", Toast.LENGTH_LONG).show();
                     }
                     break;

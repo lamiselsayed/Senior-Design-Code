@@ -1,6 +1,10 @@
-# Senior-Design-Code
+### Senior Design Project Implementation
 
 Hi Shella :)
 
-Can we delete the old Notebook 3?
-Yes we can ;), I made copies of them in my local just in case
+Notebooks We Are Using (Others Can Be Deleted):
+*  01-Categorizing Clean Dataset
+*  02-Saving Frame Statistics
+*  03-First Save Grayscale and Resolution
+*  04-Directional ATD and Stack (ArabSign)
+*  Dictionary of Labeled Sentences

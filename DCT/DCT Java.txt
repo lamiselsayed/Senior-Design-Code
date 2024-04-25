@@ -20,8 +20,8 @@ import org.opencv.videoio.VideoCapture;
 
 public class DCT {
 	
-	public static double[][] extractFrames(String videoPath) throws IOException {
-		File file = new File(videoPath);
+	public static double[][] extractImage(String imagePath) throws IOException {
+		File file = new File(imagePath);
 		BufferedImage image = ImageIO.read(file);
 		BufferedImage grayscaleImage = convertToGrayscale(image);
 		double[][] imageArray = imageToArray(grayscaleImage);
@@ -92,20 +92,17 @@ public class DCT {
 	
     public static void main(String[] args) throws IOException {
 
-    	String videoPath = "C:\\Users\\salma\\Downloads\\Testing Sample\\01_0001_(10_03_21_20_37_10)_c\\word_0\\5.png";
+    	String imagePath = "C:\\Users\\salma\\Downloads\\Testing Sample\\01_0001_(10_03_21_20_37_10)_c\\word_0\\5.png";
 		
-    	double[][] frames = extractFrames(videoPath);
+    	double[][] image = extractImage(imagePath);
     	
     	double[][] topLeftCorner = new double[45][45];
     	
     	for(int r = 0; r < topLeftCorner.length; r++) 
     		for (int c = 0; c < topLeftCorner[r].length; c ++)
-    			topLeftCorner[r][c] = frames[r][c];
+    			topLeftCorner[r][c] = image[r][c];
     	
-
     	double[][] output = dct2(topLeftCorner);
-    	
-    	System.out.println("Output size: " + output.length + "*" + output[0].length + " = " + output.length*output[0].length);
     	
     	System.out.println("DCT2 result:");
         for (int i = 0; i < output.length; i++) {

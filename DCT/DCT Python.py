@@ -30,12 +30,13 @@ def extractImage(imagePath):
     return gray_frame_float64
 
 
-imagePath =  "C:\\Users\\salma\\Downloads\\Testing Sample\\01_0001_(10_03_21_20_37_10)_c\\word_0\\5.png"
+imagePath =  r"C:\Users\zaher.salman\Desktop\LINA JAN 24\Senior II\ArabSign Stacks Cropped\01\train\0001\01_0001_(10_03_21_20_37_17)_c\word_0\5.png"
 image = extractImage(imagePath)
+
+output = dct2(image)
 
 topLeftCorner = image[:45, :45]
 
-output = dct2(topLeftCorner)
 
 print("DCT2 result:")
-print(output)
+print(topLeftCorner)
